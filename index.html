@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Shop 974">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#007bff">
+    <meta name="msapplication-TileColor" content="#007bff">
+    <meta name="msapplication-navbutton-color" content="#007bff">
+    <meta name="description" content="Shop 974 - E-commerce de La Réunion. Découvrez nos produits de qualité avec livraison rapide.">
+    <meta name="keywords" content="e-commerce, réunion, 974, boutique en ligne, shopping">
+    <meta name="author" content="Shop 974">
+
+    <title>Shop 974 - E-commerce</title>
+
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="/manifest.json">
+
+    <!-- Favicons -->
+    <link rel="apple-touch-icon" sizes="180x180" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'><rect width='180' height='180' fill='%23007bff'/><text x='90' y='100' text-anchor='middle' fill='white' font-size='60' font-family='Arial'>S</text></svg>">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%23007bff'/><text x='16' y='20' text-anchor='middle' fill='white' font-size='20' font-family='Arial'>S</text></svg>">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="css/style.css">
+
+    <!-- External APIs -->
+    <script src="https://js.stripe.com/v3/"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLE_MAPS_API_KEY&libraries=places"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js"></script>
+
+    <!-- Preload fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+</head>
+<body>
+<!-- Skip Link for Accessibility -->
+<a href="#main-content" class="skip-link">Passer au contenu principal</a>
+
+<!-- Header -->
+<header>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <h1>Shop 974</h1>
+            </div>
+            <div class="mobile-menu-toggle" onclick="toggleMobileMenu()" aria-label="Menu mobile">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <div class="nav-menu" id="navMenu">
+                <a href="#" class="nav-link" onclick="showHome()">Accueil</a>
+                <a href="#" class="nav-link" onclick="showProducts()">Produits</a>
+                <div class="user-actions">
+                    <button id="loginBtn" class="btn-secondary" onclick="showLogin()">Connexion</button>
+                    <button id="accountBtn" class="btn-secondary hidden" onclick="showAccount()">Mon Compte</button>
+                    <button class="btn-cart" onclick="showCart()" aria-label="Voir le panier">
+                        <span class="cart-icon">🛒</span>
+                        <span class="cart-text">Panier</span>
+                        <span class="cart-badge" id="cartCount">0</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<!-- Main Content -->
+<main id="main-content">
+    <!-- Home Section -->
+    <section id="homeSection" class="section active">
+        <div class="hero">
+            <div class="hero-content">
+                <h2>Bienvenue sur Shop 974</h2>
+                <p>Découvrez notre sélection de produits de qualité à La Réunion</p>
+                <button class="btn-primary hero-btn" onclick="showProducts()">Explorer les produits</button>
+            </div>
+        </div>
+
+        <div class="container">
+            <section class="features">
+                <h3>Pourquoi choisir Shop 974 ?</h3>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">🚚</div>
+                        <h4>Livraison Rapide</h4>
+                        <p>Livraison gratuite dès 50€ d'achat partout à La Réunion</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">💳</div>
+                        <h4>Paiement Sécurisé</h4>
+                        <p>Cartes bancaires, PayPal, Apple Pay et Google Pay acceptés</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">📞</div>
+                        <h4>Service Client</h4>
+                        <p>Une équipe dédiée pour vous accompagner 7j/7</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">↩️</div>
+                        <h4>Retours Faciles</h4>
+                        <p>Retours gratuits sous 30 jours, satisfait ou remboursé</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section id="productsSection" class="section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Nos Produits</h2>
+                <p>Découvrez notre sélection soigneusement choisie pour vous</p>
+            </div>
+
+            <!-- Filters -->
+            <div class="filters">
+                <div class="filters-scroll">
+                    <button class="filter-btn active" data-filter="all">Tous</button>
+                    <button class="filter-btn" data-filter="homme">Homme</button>
+                    <button class="filter-btn" data-filter="femme">Femme</button>
+                    <button class="filter-btn" data-filter="jeux-video">Jeux Vidéo</button>
+                    <button class="filter-btn" data-filter="peluche">Peluches</button>
+                </div>
+            </div>
+
+            <!-- Products Grid -->
+            <div id="productsGrid" class="products-grid">
+                <!-- Products will be dynamically generated -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Product Detail Section -->
+    <section id="productDetailSection" class="section">
+        <div class="container">
+            <button class="btn-back" onclick="showProducts()" aria-label="Retour aux produits">
+                ← Retour aux produits
+            </button>
+            <div id="productDetail" class="product-detail">
+                <!-- Product detail will be dynamically generated -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Cart Section -->
+    <section id="cartSection" class="section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Mon Panier</h2>
+                <p>Vérifiez vos articles avant de finaliser votre commande</p>
+            </div>
+
+            <div class="cart-container">
+                <div id="cartItems" class="cart-items">
+                    <!-- Cart items will be dynamically generated -->
+                </div>
+
+                <div class="cart-summary">
+                    <div class="summary-details">
+                        <div class="summary-line">
+                            <span>Sous-total:</span>
+                            <span>€<span id="cartSubtotal">0.00</span></span>
+                        </div>
+                        <div class="summary-line">
+                            <span>Livraison:</span>
+                            <span id="shippingCost">Calculé à l'étape suivante</span>
+                        </div>
+                        <hr>
+                        <div class="summary-line total-line">
+                            <strong>Total: €<span id="cartTotal">0.00</span></strong>
+                        </div>
+                    </div>
+                    <button class="btn-primary btn-checkout" onclick="showCheckout()">
+                        Procéder au paiement
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Checkout Section -->
+    <section id="checkoutSection" class="section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Finaliser la commande</h2>
+                <p>Dernière étape avant de recevoir vos produits</p>
+            </div>
+
+            <div class="checkout-container">
+                <div class="checkout-form">
+                    <div class="checkout-steps">
+                        <div class="step active">
+                            <span class="step-number">1</span>
+                            <span class="step-title">Informations</span>
+                        </div>
+                        <div class="step">
+                            <span class="step-number">2</span>
+                            <span class="step-title">Livraison</span>
+                        </div>
+                        <div class="step">
+                            <span class="step-number">3</span>
+                            <span class="step-title">Paiement</span>
+                        </div>
+                    </div>
+
+                    <form id="checkoutForm" novalidate>
+                        <fieldset>
+                            <legend>Informations personnelles</legend>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="firstName">Prénom *</label>
+                                    <input type="text" id="firstName" name="firstName" required autocomplete="given-name" aria-describedby="firstName-error">
+                                    <div class="field-error" id="firstName-error"></div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="lastName">Nom *</label>
+                                    <input type="text" id="lastName" name="lastName" required autocomplete="family-name" aria-describedby="lastName-error">
+                                    <div class="field-error" id="lastName-error"></div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="email">Email *</label>
+                                <input type="email" id="email" name="email" required autocomplete="email" aria-describedby="email-error">
+                                <div class="field-error" id="email-error"></div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="phone">Téléphone *</label>
+                                <input type="tel" id="phone" name="phone" required autocomplete="tel" aria-describedby="phone-error" placeholder="+262 6XX XX XX XX">
+                                <div class="field-error" id="phone-error"></div>
+                            </div>
+                        </fieldset>
+
+                        <fieldset>
+                            <legend>Adresse de livraison</legend>
+                            <div class="form-group">
+                                <label for="address">Adresse complète *</label>
+                                <input type="text" id="address" name="address" required autocomplete="street-address"
+                                       placeholder="Commencez à taper votre adresse..." aria-describedby="address-error">
+                                <div class="field-error" id="address-error"></div>
+                                <div id="map" class="map-container" role="img" aria-label="Carte interactive pour confirmer l'adresse"></div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="city">Ville</label>
+                                    <input type="text" id="city" name="city" autocomplete="address-level2" readonly>
+                                </div>
+                                <div class="form-group">
+                                    <label for="postalCode">Code postal</label>
+                                    <input type="text" id="postalCode" name="postalCode" autocomplete="postal-code" readonly>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </form>
+
+                    <div class="payment-section">
+                        <h3>Mode de paiement</h3>
+                        <div class="payment-methods">
+                            <label class="payment-option">
+                                <input type="radio" name="paymentMethod" value="card" checked>
+                                <span class="payment-icon">💳</span>
+                                <div class="payment-info">
+                                    <span class="payment-title">Carte bancaire</span>
+                                    <span class="payment-desc">Visa, Mastercard, American Express</span>
+                                </div>
+                            </label>
+
+                            <label class="payment-option">
+                                <input type="radio" name="paymentMethod" value="paypal">
+                                <span class="payment-icon">💰</span>
+                                <div class="payment-info">
+                                    <span class="payment-title">PayPal</span>
+                                    <span class="payment-desc">Payez avec votre compte PayPal</span>
+                                </div>
+                            </label>
+
+                            <label class="payment-option apple-pay-option">
+                                <input type="radio" name="paymentMethod" value="apple-pay">
+                                <span class="payment-icon">📱</span>
+                                <div class="payment-info">
+                                    <span class="payment-title">Apple Pay</span>
+                                    <span class="payment-desc">Paiement rapide et sécurisé</span>
+                                </div>
+                            </label>
+
+                            <label class="payment-option google-pay-option">
+                                <input type="radio" name="paymentMethod" value="google-pay">
+                                <span class="payment-icon">🤖</span>
+                                <div class="payment-info">
+                                    <span class="payment-title">Google Pay</span>
+                                    <span class="payment-desc">Paiement en un clic</span>
+                                </div>
+                            </label>
+                        </div>
+
+                        <!-- Payment Forms -->
+                        <div id="cardPayment" class="payment-form">
+                            <div id="card-element" class="card-element">
+                                <!-- Stripe card element will be inserted here -->
+                            </div>
+                            <div id="card-errors" class="card-errors" role="alert"></div>
+                        </div>
+
+                        <div id="paypalPayment" class="payment-form hidden">
+                            <div id="paypal-button-container"></div>
+                        </div>
+
+                        <div id="applePayPayment" class="payment-form hidden">
+                            <div id="apple-pay-button" class="apple-pay-button"></div>
+                        </div>
+
+                        <div id="googlePayPayment" class="payment-form hidden">
+                            <div id="google-pay-button" class="google-pay-button">
+                                <svg class="google-pay-logo" viewBox="0 0 41 17" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill="#ffffff" d="M19.5 4.9c0 1.9-1.2 3.5-3.2 3.5s-3.2-1.6-3.2-3.5c0-1.9 1.2-3.5 3.2-3.5s3.2 1.6 3.2 3.5zm-1.4 0c0-1.3-.9-2.2-1.8-2.2s-1.8.9-1.8 2.2c0 1.3.9 2.2 1.8 2.2s1.8-.9 1.8-2.2z"/>
+                                    <path fill="#ffffff" d="M26.6 4.9c0 1.9-1.2 3.5-3.2 3.5s-3.2-1.6-3.2-3.5c0-1.9 1.2-3.5 3.2-3.5s3.2 1.6 3.2 3.5zm-1.4 0c0-1.3-.9-2.2-1.8-2.2s-1.8.9-1.8 2.2c0 1.3.9 2.2 1.8 2.2s1.8-.9 1.8-2.2z"/>
+                                    <path fill="#ffffff" d="M32.8 1.6v6.6c0 2.7-1.6 3.8-3.5 3.8-1.8 0-2.9-1.2-3.3-2.2l1.2-.5c.3.7 1 1.5 2.1 1.5 1.4 0 2.2-.9 2.2-2.5v-.5h-.1c-.4.5-1.2.9-2.2.9-2.1 0-4-1.8-4-4.1s1.9-4.1 4-4.1c1 0 1.8.4 2.2.9h.1V1.6h1.3zm-1.2 3.3c0-1.5-1-2.3-2.3-2.3-1.3 0-2.4.8-2.4 2.3s1.1 2.3 2.4 2.3c1.3 0 2.3-.8 2.3-2.3z"/>
+                                    <path fill="#ffffff" d="M34.1 0v8.3h-1.4V0h1.4z"/>
+                                    <path fill="#ffffff" d="M39.9 6.6l1.1 .7c-.4.6-1.3 1.6-2.9 1.6-2 0-3.5-1.5-3.5-3.5 0-2.1 1.5-3.5 3.3-3.5 1.8 0 2.7 1.4 3 2.2l.2.4-4.7 1.9c.4.7 1 1.1 1.8 1.1.8 0 1.4-.4 1.8-1zm-3.7-1.3l3.1-1.3c-.2-.4-.7-.7-1.3-.7-.8 0-1.9.7-1.8 2z"/>
+                                    <path fill="#ffffff" d="M8.4 6.3V5H13c.1.5.1 1.1.1 1.8 0 2.2-.6 4.9-2.5 6.8C8.8 15.4 6.5 16 3.9 16 1.8 16 0 14.2 0 12.1S1.8 8.2 3.9 8.2c1.1 0 2 .4 2.6 1l-.9.9c-.4-.4-1-.7-1.7-.7-1.4 0-2.5 1.1-2.5 2.5s1.1 2.5 2.5 2.5c1 0 1.6-.4 2-1 .3-.5.4-1.2.4-1.7H3.9V9.1h4.4l.1 1.2z"/>
+                                </svg>
+                                <span>Payer avec Google Pay</span>
+                            </div>
+                        </div>
+
+                        <button id="submitPayment" class="btn-primary btn-payment">
+                            <span class="btn-text">Payer €<span id="finalTotal">0.00</span></span>
+                            <span class="payment-spinner hidden"></span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="order-summary">
+                    <h3>Récapitulatif de commande</h3>
+                    <div id="orderSummary" class="order-summary-content">
+                        <!-- Order summary will be dynamically generated -->
+                    </div>
+
+                    <div class="promo-code">
+                        <h4>Code promo</h4>
+                        <div class="promo-input">
+                            <input type="text" id="promoCode" placeholder="Entrez votre code">
+                            <button type="button" onclick="applyPromoCode()">Appliquer</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Login/Register Section -->
+    <section id="loginSection" class="section">
+        <div class="container">
+            <div class="auth-container">
+                <div class="auth-header">
+                    <h2>Connexion à votre compte</h2>
+                    <p>Accédez à vos commandes et informations personnelles</p>
+                </div>
+
+                <div class="auth-tabs">
+                    <button class="auth-tab active" onclick="showLoginForm()">Connexion</button>
+                    <button class="auth-tab" onclick="showRegisterForm()">Inscription</button>
+                </div>
+
+                <div id="loginForm" class="auth-form">
+                    <form onsubmit="login(event)" novalidate>
+                        <div class="form-group">
+                            <label for="loginEmail">Email *</label>
+                            <input type="email" id="loginEmail" name="email" required autocomplete="email" aria-describedby="loginEmail-error">
+                            <div class="field-error" id="loginEmail-error"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="loginPassword">Mot de passe *</label>
+                            <input type="password" id="loginPassword" name="password" required autocomplete="current-password" aria-describedby="loginPassword-error">
+                            <div class="field-error" id="loginPassword-error"></div>
+                        </div>
+
+                        <div class="form-options">
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="remember" id="rememberMe">
+                                <span class="checkbox-custom"></span>
+                                Se souvenir de moi
+                            </label>
+                            <a href="#" class="forgot-password">Mot de passe oublié ?</a>
+                        </div>
+
+                        <button type="submit" class="btn-primary btn-auth">Se connecter</button>
+                    </form>
+                </div>
+
+                <div id="registerForm" class="auth-form hidden">
+                    <form onsubmit="register(event)" novalidate>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="regFirstName">Prénom *</label>
+                                <input type="text" id="regFirstName" name="firstName" required autocomplete="given-name" aria-describedby="regFirstName-error">
+                                <div class="field-error" id="regFirstName-error"></div>
+                            </div>
+                            <div class="form-group">
+                                <label for="regLastName">Nom *</label>
+                                <input type="text" id="regLastName" name="lastName" required autocomplete="family-name" aria-describedby="regLastName-error">
+                                <div class="field-error" id="regLastName-error"></div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="regEmail">Email *</label>
+                            <input type="email" id="regEmail" name="email" required autocomplete="email" aria-describedby="regEmail-error">
+                            <div class="field-error" id="regEmail-error"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="regPassword">Mot de passe *</label>
+                            <input type="password" id="regPassword" name="password" required autocomplete="new-password" minlength="6" aria-describedby="regPassword-error">
+                            <div class="field-error" id="regPassword-error"></div>
+                            <div class="password-strength">
+                                <div class="strength-bar">
+                                    <div class="strength-fill"></div>
+                                </div>
+                                <span class="strength-text">Minimum 6 caractères</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="terms" id="acceptTerms" required>
+                                <span class="checkbox-custom"></span>
+                                J'accepte les <a href="#" class="link">conditions d'utilisation</a> et la <a href="#" class="link">politique de confidentialité</a>
+                            </label>
+                        </div>
+
+                        <button type="submit" class="btn-primary btn-auth">S'inscrire</button>
+                    </form>
+                </div>
+
+                <div class="auth-divider">
+                    <span>ou</span>
+                </div>
+
+                <div class="social-login">
+                    <button class="btn-social btn-google" onclick="loginWithGoogle()">
+                        <svg width="20" height="20" viewBox="0 0 24 24">
+                            <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                            <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                            <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+                            <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+                        </svg>
+                        Continuer avec Google
+                    </button>
+
+                    <button class="btn-social btn-facebook" onclick="loginWithFacebook()">
+                        <svg width="20" height="20" viewBox="0 0 24 24">
+                            <path fill="#1877F2" d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                        </svg>
+                        Continuer avec Facebook
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Account Section -->
+    <section id="accountSection" class="section">
+        <div class="container">
+            <div class="account-header">
+                <div class="account-info">
+                    <h2>Mon Compte</h2>
+                    <p id="welcomeMessage">Bienvenue dans votre espace personnel</p>
+                </div>
+                <button class="btn-secondary" onclick="logout()">Déconnexion</button>
+            </div>
+
+            <div class="account-tabs">
+                <button class="account-tab active" onclick="showOrderHistory()">
+                    <span class="tab-icon">📦</span>
+                    Mes commandes
+                </button>
+                <button class="account-tab" onclick="showProfile()">
+                    <span class="tab-icon">👤</span>
+                    Mon profil
+                </button>
+                <button class="account-tab" onclick="showAddresses()">
+                    <span class="tab-icon">📍</span>
+                    Mes adresses
+                </button>
+                <button class="account-tab" onclick="showPreferences()">
+                    <span class="tab-icon">⚙️</span>
+                    Préférences
+                </button>
+            </div>
+
+            <div id="orderHistory" class="account-content">
+                <div class="content-header">
+                    <h3>Historique des commandes</h3>
+                    <div class="order-filters">
+                        <select id="orderFilter" onchange="filterOrders()">
+                            <option value="all">Toutes les commandes</option>
+                            <option value="pending">En cours</option>
+                            <option value="completed">Livrées</option>
+                            <option value="cancelled">Annulées</option>
+                        </select>
+                    </div>
+                </div>
+                <div id="ordersList" class="orders-list">
+                    <!-- Orders will be dynamically generated -->
+                </div>
+            </div>
+
+            <div id="profileSection" class="account-content hidden">
+                <div class="content-header">
+                    <h3>Informations personnelles</h3>
+                    <p>Gérez vos informations de compte</p>
+                </div>
+
+                <form id="profileForm" onsubmit="updateProfile(event)" novalidate>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="profileFirstName">Prénom *</label>
+                            <input type="text" id="profileFirstName" name="firstName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="profileLastName">Nom *</label>
+                            <input type="text" id="profileLastName" name="lastName" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="profileEmail">Email *</label>
+                        <input type="email" id="profileEmail" name="email" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="profilePhone">Téléphone</label>
+                        <input type="tel" id="profilePhone" name="phone">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="profileBirthdate">Date de naissance</label>
+                        <input type="date" id="profileBirthdate" name="birthdate">
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn-primary">Mettre à jour</button>
+                        <button type="button" class="btn-secondary" onclick="changePassword()">Changer le mot de passe</button>
+                    </div>
+                </form>
+            </div>
+
+            <div id="addressesSection" class="account-content hidden">
+                <div class="content-header">
+                    <h3>Mes adresses</h3>
+                    <button class="btn-primary" onclick="addNewAddress()">Ajouter une adresse</button>
+                </div>
+                <div id="addressesList" class="addresses-list">
+                    <!-- Addresses will be dynamically generated -->
+                </div>
+            </div>
+
+            <div id="preferencesSection" class="account-content hidden">
+                <div class="content-header">
+                    <h3>Préférences</h3>
+                    <p>Personnalisez votre expérience d'achat</p>
+                </div>
+
+                <div class="preferences-grid">
+                    <div class="preference-group">
+                        <h4>Notifications</h4>
+                        <label class="toggle-label">
+                            <input type="checkbox" id="emailNotifications" checked>
+                            <span class="toggle-switch"></span>
+                            Notifications par email
+                        </label>
+                        <label class="toggle-label">
+                            <input type="checkbox" id="smsNotifications">
+                            <span class="toggle-switch"></span>
+                            Notifications SMS
+                        </label>
+                        <label class="toggle-label">
+                            <input type="checkbox" id="promoNotifications" checked>
+                            <span class="toggle-switch"></span>
+                            Offres promotionnelles
+                        </label>
+                    </div>
+
+                    <div class="preference-group">
+                        <h4>Apparence</h4>
+                        <label class="toggle-label">
+                            <input type="checkbox" id="darkMode" onchange="toggleDarkMode()">
+                            <span class="toggle-switch"></span>
+                            Mode sombre
+                        </label>
+                        <div class="form-group">
+                            <label for="language">Langue</label>
+                            <select id="language">
+                                <option value="fr">Français</option>
+                                <option value="en">English</option>
+                                <option value="es">Español</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="preference-group">
+                        <h4>Confidentialité</h4>
+                        <label class="toggle-label">
+                            <input type="checkbox" id="dataCollection" checked>
+                            <span class="toggle-switch"></span>
+                            Collecte de données pour améliorer l'expérience
+                        </label>
+                        <label class="toggle-label">
+                            <input type="checkbox" id="targetedAds">
+                            <span class="toggle-switch"></span>
+                            Publicité ciblée
+                        </label>
+                    </div>
+                </div>
+
+                <div class="preferences-actions">
+                    <button class="btn-primary" onclick="savePreferences()">Sauvegarder</button>
+                    <button class="btn-danger" onclick="deleteAccount()">Supprimer mon compte</button>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>Shop 974</h4>
+                <p>Votre boutique en ligne de confiance à La Réunion depuis 2024.</p>
+                <div class="social-links">
+                    <a href="#" aria-label="Facebook"><span>📘</span></a>
+                    <a href="#" aria-label="Instagram"><span>📷</span></a>
+                    <a href="#" aria-label="Twitter"><span>🐦</span></a>
+                    <a href="#" aria-label="YouTube"><span>📺</span></a>
+                </div>
+            </div>
+
+            <div class="footer-section">
+                <h4>Service Client</h4>
+                <ul>
+                    <li><a href="#contact">Nous contacter</a></li>
+                    <li><a href="#faq">FAQ</a></li>
+                    <li><a href="#returns">Retours & Échanges</a></li>
+                    <li><a href="#shipping">Livraison</a></li>
+                    <li><a href="#size-guide">Guide des tailles</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h4>À propos</h4>
+                <ul>
+                    <li><a href="#about">Notre histoire</a></li>
+                    <li><a href="#careers">Carrières</a></li>
+                    <li><a href="#press">Presse</a></li>
+                    <li><a href="#sustainability">Développement durable</a></li>
+                    <li><a href="#partners">Nos partenaires</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h4>Légal</h4>
+                <ul>
+                    <li><a href="#terms">Conditions d'utilisation</a></li>
+                    <li><a href="#privacy">Politique de confidentialité</a></li>
+                    <li><a href="#cookies">Politique des cookies</a></li>
+                    <li><a href="#legal">Mentions légales</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h4>Newsletter</h4>
+                <p>Restez informé de nos dernières offres et nouveautés</p>
+                <form class="newsletter-form" onsubmit="subscribeNewsletter(event)">
+                    <input type="email" placeholder="Votre email" required>
+                    <button type="submit" class="btn-primary">S'abonner</button>
+                </form>
+
+                <div class="payment-methods">
+                    <h5>Méthodes de paiement acceptées</h5>
+                    <div class="payment-icons">
+                        <span>💳</span>
+                        <span>🅿️</span>
+                        <span>📱</span>
+                        <span>🤖</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <div class="footer-bottom-content">
+                <p>&copy; 2024 Shop 974. Tous droits réservés.</p>
+                <div class="footer-links">
+                    <a href="#accessibility">Accessibilité</a>
+                    <a href="#sitemap">Plan du site</a>
+                    <span>Version 2.0.1</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- Loading Overlay -->
+<div id="loadingOverlay" class="loading-overlay hidden">
+    <div class="loading-content">
+        <div class="loading-spinner"></div>
+        <p class="loading-text">Chargement en cours...</p>
+    </div>
+</div>
+
+<!-- Success Modal Template -->
+<template id="successModalTemplate">
+    <div class="modal-overlay">
+        <div class="modal-content success-modal">
+            <div class="modal-header">
+                <div class="success-icon">✅</div>
+                <h3>Commande confirmée !</h3>
+            </div>
+            <div class="modal-body">
+                <p>Votre commande <strong class="order-number"></strong> a été passée avec succès.</p>
+                <p>Vous recevrez un email de confirmation sous peu.</p>
+                <div class="order-details">
+                    <div class="detail-item">
+                        <span>Total:</span>
+                        <span class="order-total"></span>
+                    </div>
+                    <div class="detail-item">
+                        <span>Livraison estimée:</span>
+                        <span class="delivery-date"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-actions">
+                <button class="btn-primary" onclick="closeModal(); showHome();">Continuer mes achats</button>
+                <button class="btn-secondary" onclick="closeModal(); showAccount();">Voir mes commandes</button>
+            </div>
+        </div>
+    </div>
+</template>
+
+<!-- Scripts -->
+<script src="https://www.paypal.com/sdk/js?client-id=YOUR_PAYPAL_CLIENT_ID&currency=EUR"></script>
+<script async src="https://pay.google.com/gp/p/js/pay.js"></script>
+<script src="https://applepay.cdn-apple.com/jsapi/v1/apple-pay-sdk.js"></script>
+
+<!-- Platform detection and mobile optimization -->
+<script>
+    // Detect platform and adjust accordingly
+    const userAgent = navigator.userAgent.toLowerCase();
+    const isIOS = /iphone|ipad|ipod/.test(userAgent);
+    const isAndroid = /android/.test(userAgent);
+    const isMobile = /mobile|tablet|android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/.test(userAgent);
+
+    // Add platform classes to body
+    document.addEventListener('DOMContentLoaded', function() {
+        document.body.classList.add(isMobile ? 'mobile' : 'desktop');
+        if (isIOS) document.body.classList.add('ios');
+        if (isAndroid) document.body.classList.add('android');
+
+        // Disable bounce effect on iOS
+        if (isIOS) {
+            document.addEventListener('touchmove', function(e) {
+                if (e.target.closest('.scrollable')) return;
+                e.preventDefault();
+            }, { passive: false });
+        }
+    });
+
+    // Critical performance optimization
+    window.addEventListener('load', function() {
+        // Remove loading class after page is fully loaded
+        document.body.classList.remove('loading');
+
+        // Initialize lazy loading for images
+        if ('IntersectionObserver' in window) {
+            const imageObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const img = entry.target;
+                        if (img.dataset.src) {
+                            img.src = img.dataset.src;
+                            img.classList.remove('lazy');
+                            imageObserver.unobserve(img);
+                        }
+                    }
+                });
+            });
+
+            document.querySelectorAll('img[data-src]').forEach(img => {
+                imageObserver.observe(img);
+            });
+        }
+    });
+
+    // Register Service Worker for PWA
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function() {
+            navigator.serviceWorker.register('/sw.js')
+                .then(function(registration) {
+                    console.log('Service Worker registered successfully');
+                })
+                .catch(function(error) {
+                    console.log('Service Worker registration failed');
+                });
+        });
+    }
+
+    // Handle install prompt for PWA
+    let deferredPrompt;
+    window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        deferredPrompt = e;
+        showInstallPrompt();
+    });
+
+    function showInstallPrompt() {
+        if (deferredPrompt) {
+            const installBar = document.createElement('div');
+            installBar.className = 'install-prompt';
+            installBar.innerHTML = `
+                    <div class="install-content">
+                        <span>📱 Installer Shop 974 comme application</span>
+                        <div class="install-actions">
+                            <button onclick="installApp()" class="btn-install">Installer</button>
+                            <button onclick="dismissInstall()" class="btn-dismiss">×</button>
+                        </div>
+                    </div>
+                `;
+            document.body.appendChild(installBar);
+        }
+    }
+
+    function installApp() {
+        if (deferredPrompt) {
+            deferredPrompt.prompt();
+            deferredPrompt.userChoice.then((choiceResult) => {
+                if (choiceResult.outcome === 'accepted') {
+                    console.log('PWA installation accepted');
+                }
+                deferredPrompt = null;
+                dismissInstall();
+            });
+        }
+    }
+
+    function dismissInstall() {
+        const installPrompt = document.querySelector('.install-prompt');
+        if (installPrompt) {
+            installPrompt.remove();
+        }
+    }
+
+    // Handle online/offline status
+    window.addEventListener('online', function() {
+        showNotification('Connexion rétablie', 'success');
+    });
+
+    window.addEventListener('offline', function() {
+        showNotification('Mode hors ligne activé', 'warning');
+    });
+
+    // Accessibility improvements
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            // Close any open modals or menus
+            const modals = document.querySelectorAll('.modal-overlay, .success-modal, .order-modal');
+            modals.forEach(modal => modal.remove());
+
+            const mobileMenu = document.getElementById('navMenu');
+            if (mobileMenu && mobileMenu.classList.contains('active')) {
+                toggleMobileMenu();
+            }
+        }
+    });
+
+    // Enhanced form validation
+    document.addEventListener('input', function(e) {
+        if (e.target.tagName === 'INPUT') {
+            validateField(e.target);
+        }
+    });
+
+    function validateField(field) {
+        const errorElement = document.getElementById(field.id + '-error');
+        if (!errorElement) return;
+
+        let isValid = true;
+        let errorMessage = '';
+
+        if (field.hasAttribute('required') && !field.value.trim()) {
+            isValid = false;
+            errorMessage = 'Ce champ est obligatoire';
+        } else if (field.type === 'email' && field.value) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(field.value)) {
+                isValid = false;
+                errorMessage = 'Veuillez saisir une adresse email valide';
+            }
+        } else if (field.type === 'tel' && field.value) {
+            const phoneRegex = /^(\+262|0)(6|7|9)\d{8}$/;
+            if (!phoneRegex.test(field.value.replace(/\s/g, ''))) {
+                isValid = false;
+                errorMessage = 'Veuillez saisir un numéro de téléphone réunionnais valide';
+            }
+        } else if (field.minLength && field.value.length < field.minLength) {
+            isValid = false;
+            errorMessage = `Minimum ${field.minLength} caractères requis`;
+        }
+
+        field.classList.toggle('error', !isValid);
+        errorElement.textContent = errorMessage;
+
+        return isValid;
+    }
+
+    // Initialize theme based on user preference
+    if (localStorage.getItem('darkMode') === 'true') {
+        document.body.classList.add('dark-mode');
+        const darkModeToggle = document.getElementById('darkMode');
+        if (darkModeToggle) darkModeToggle.checked = true;
+    }
+
+    // Performance monitoring
+    if ('performance' in window) {
+        window.addEventListener('load', function() {
+            setTimeout(() => {
+                const perfData = performance.getEntriesByType('navigation')[0];
+                console.log('Page load time:', Math.round(perfData.loadEventEnd - perfData.loadEventStart) + 'ms');
+            }, 0);
+        });
+    }
+</script>
+
+<script src="js/script.js"></script>
+</body>
+</html>
