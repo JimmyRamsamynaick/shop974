@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Produits - Shop 974</title>
+    
+    <!-- CSS commun -->
+    <link rel="stylesheet" href="/css/common.css">
+    <!-- CSS spécifique à la page produits -->
+    <link rel="stylesheet" href="/css/produits.css">
+</head>
+<body>
+    <!-- Header -->
+    <div id="header-placeholder"></div>
+
+    <!-- Contenu principal -->
+    <main class="main-content">
+        <div class="container">
+            <!-- En-tête de la page -->
+            <div class="page-header">
+                <h1>🛍️ Nos Produits</h1>
+                <p>Découvrez notre sélection de produits authentiques de La Réunion</p>
+            </div>
+
+            <!-- Filtres et recherche -->
+            <div class="filters-section">
+                <div class="search-bar">
+                    <input type="text" id="search-input" placeholder="Rechercher un produit..." class="search-input">
+                    <button id="search-btn" class="search-btn">🔍</button>
+                </div>
+
+                <div class="filters">
+                    <div class="filter-group">
+                        <label for="category-filter">Catégorie :</label>
+                        <select id="category-filter" class="filter-select">
+                            <option value="">Toutes les catégories</option>
+                            <option value="epices">Épices & Condiments</option>
+                            <option value="rhums">Rhums & Spiritueux</option>
+                            <option value="vanille">Vanille & Arômes</option>
+                            <option value="artisanat">Artisanat Local</option>
+                        </select>
+                    </div>
+
+                    <div class="filter-group">
+                        <label for="price-filter">Prix :</label>
+                        <select id="price-filter" class="filter-select">
+                            <option value="">Tous les prix</option>
+                            <option value="0-10">0€ - 10€</option>
+                            <option value="10-25">10€ - 25€</option>
+                            <option value="25-50">25€ - 50€</option>
+                            <option value="50+">50€ et plus</option>
+                        </select>
+                    </div>
+
+                    <div class="filter-group">
+                        <label for="sort-filter">Trier par :</label>
+                        <select id="sort-filter" class="filter-select">
+                            <option value="name">Nom</option>
+                            <option value="price-asc">Prix croissant</option>
+                            <option value="price-desc">Prix décroissant</option>
+                            <option value="newest">Plus récent</option>
+                        </select>
+                    </div>
+
+                    <button id="clear-filters" class="btn btn-secondary">Effacer les filtres</button>
+                </div>
+            </div>
+
+            <!-- Résultats -->
+            <div class="results-info">
+                <span id="results-count">Chargement...</span>
+                <div class="view-toggle">
+                    <button id="grid-view" class="view-btn active">⊞ Grille</button>
+                    <button id="list-view" class="view-btn">☰ Liste</button>
+                </div>
+            </div>
+
+            <!-- Grille de produits -->
+            <div class="products-container">
+                <div id="products-grid" class="products-grid">
+                    <!-- Les produits seront chargés dynamiquement -->
+                </div>
+
+                <!-- Message si aucun produit -->
+                <div id="no-products" class="no-products" style="display: none;">
+                    <div class="no-products-content">
+                        <div class="no-products-icon">🔍</div>
+                        <h3>Aucun produit trouvé</h3>
+                        <p>Essayez de modifier vos critères de recherche ou de filtrage.</p>
+                        <button id="reset-search" class="btn">Réinitialiser la recherche</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pagination -->
+            <div class="pagination" id="pagination">
+                <!-- La pagination sera générée dynamiquement -->
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <div id="footer-placeholder"></div>
+
+    <!-- JavaScript commun -->
+    <script src="/js/common.js"></script>
+    <!-- JavaScript spécifique à la page produits -->
+    <script src="/js/produits.js"></script>
+</body>
+</html>

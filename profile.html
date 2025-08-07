@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mon Compte - Shop 974</title>
+    
+    <!-- CSS commun -->
+    <link rel="stylesheet" href="/css/common.css">
+    <!-- CSS spécifique au profil -->
+    <link rel="stylesheet" href="/css/profile.css">
+</head>
+<body>
+    <!-- Header -->
+    <div id="header-placeholder"></div>
+
+    <!-- Contenu principal -->
+    <main class="main-content">
+        <div class="container">
+            <div class="profile-container">
+                <!-- Navigation du profil -->
+                <aside class="profile-sidebar">
+                    <div class="profile-header">
+                        <div class="profile-avatar">
+                            <span id="user-initials">👤</span>
+                        </div>
+                        <h2 id="user-name">Chargement...</h2>
+                        <p id="user-email">Chargement...</p>
+                    </div>
+                    
+                    <nav class="profile-nav">
+                        <ul>
+                            <li><a href="#account" class="nav-link active" data-tab="account">📋 Mon compte</a></li>
+                            <li><a href="#orders" class="nav-link" data-tab="orders">📦 Mes commandes</a></li>
+                            <li><a href="#addresses" class="nav-link" data-tab="addresses">📍 Mes adresses</a></li>
+                            <li><a href="#settings" class="nav-link" data-tab="settings">⚙️ Paramètres</a></li>
+                            <li><a href="#" class="nav-link logout-btn">🚪 Déconnexion</a></li>
+                        </ul>
+                    </nav>
+                </aside>
+
+                <!-- Contenu principal du profil -->
+                <div class="profile-content">
+                    <!-- Onglet Mon compte -->
+                    <div id="account-tab" class="tab-content active">
+                        <div class="tab-header">
+                            <h1>📋 Mon compte</h1>
+                            <p>Gérez vos informations personnelles</p>
+                        </div>
+                        
+                        <div class="account-info">
+                            <div class="info-card">
+                                <h3>Informations personnelles</h3>
+                                <form id="profile-form">
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label for="firstName">Prénom</label>
+                                            <input type="text" id="firstName" name="firstName" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="lastName">Nom</label>
+                                            <input type="text" id="lastName" name="lastName" required>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="email">Email</label>
+                                        <input type="email" id="email" name="email" required readonly>
+                                        <small>L'email ne peut pas être modifié</small>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="phone">Téléphone</label>
+                                        <input type="tel" id="phone" name="phone">
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label>
+                                            <input type="checkbox" id="newsletter" name="newsletter">
+                                            Recevoir la newsletter
+                                        </label>
+                                    </div>
+                                    
+                                    <button type="submit" class="btn btn-primary">Sauvegarder</button>
+                                </form>
+                            </div>
+                            
+                            <div class="info-card">
+                                <h3>Sécurité</h3>
+                                <div class="security-info">
+                                    <div class="security-item">
+                                        <span class="security-label">Email vérifié</span>
+                                        <span class="security-status verified" id="email-verified">✅ Vérifié</span>
+                                    </div>
+                                    <div class="security-item">
+                                        <span class="security-label">Dernière connexion</span>
+                                        <span class="security-value" id="last-login">Aujourd'hui</span>
+                                    </div>
+                                </div>
+                                <button class="btn btn-secondary" id="change-password-btn">Changer le mot de passe</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Onglet Mes commandes -->
+                    <div id="orders-tab" class="tab-content">
+                        <div class="tab-header">
+                            <h1>📦 Mes commandes</h1>
+                            <p>Suivez vos commandes et votre historique d'achats</p>
+                        </div>
+                        
+                        <div class="orders-list" id="orders-list">
+                            <div class="empty-state">
+                                <div class="empty-icon">📦</div>
+                                <h3>Aucune commande</h3>
+                                <p>Vous n'avez pas encore passé de commande.</p>
+                                <a href="/produits.html" class="btn btn-primary">Découvrir nos produits</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Onglet Mes adresses -->
+                    <div id="addresses-tab" class="tab-content">
+                        <div class="tab-header">
+                            <h1>📍 Mes adresses</h1>
+                            <p>Gérez vos adresses de livraison</p>
+                        </div>
+                        
+                        <div class="addresses-list" id="addresses-list">
+                            <div class="empty-state">
+                                <div class="empty-icon">📍</div>
+                                <h3>Aucune adresse</h3>
+                                <p>Ajoutez une adresse de livraison pour faciliter vos commandes.</p>
+                                <button class="btn btn-primary" id="add-address-btn">Ajouter une adresse</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Onglet Paramètres -->
+                    <div id="settings-tab" class="tab-content">
+                        <div class="tab-header">
+                            <h1>⚙️ Paramètres</h1>
+                            <p>Personnalisez votre expérience</p>
+                        </div>
+                        
+                        <div class="settings-list">
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <h3>Notifications par email</h3>
+                                    <p>Recevez des notifications sur vos commandes</p>
+                                </div>
+                                <label class="switch">
+                                    <input type="checkbox" id="email-notifications" checked>
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                            
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <h3>Newsletter</h3>
+                                    <p>Recevez nos offres et nouveautés</p>
+                                </div>
+                                <label class="switch">
+                                    <input type="checkbox" id="newsletter-setting">
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <div id="footer-placeholder"></div>
+
+    <!-- Messages -->
+    <div id="messages-container"></div>
+
+    <!-- JavaScript commun -->
+    <script src="/js/common.js"></script>
+    <!-- JavaScript spécifique au profil -->
+    <script src="/js/profile.js"></script>
+</body>
+</html>

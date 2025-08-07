@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connexion - Shop974</title>
+    <meta name="description" content="Connectez-vous à votre compte Shop974 pour accéder à vos commandes et profiter d'une expérience personnalisée.">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/auth.css">
+</head>
+<body>
+    <!-- Header -->
+    <header id="header" class="header">
+        <div class="container">
+            <div class="header-content">
+                <!-- Logo -->
+                <div class="logo">
+                    <a href="/">
+                        <img src="/images/logo.png" alt="Shop974" style="height: 40px;">
+                        <span>Shop974</span>
+                    </a>
+                </div>
+                
+                <!-- Navigation de retour -->
+                <nav class="auth-nav">
+                    <a href="/" class="btn btn-outline">
+                        <i class="fas fa-arrow-left"></i>
+                        Retour à l'accueil
+                    </a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="auth-main">
+        <div class="container">
+            <div class="auth-container">
+                <!-- Formulaire de connexion -->
+                <div id="loginForm" class="auth-form">
+                    <div class="auth-header">
+                        <h1>Connexion</h1>
+                        <p>Connectez-vous à votre compte Shop974</p>
+                    </div>
+
+                    <form id="loginFormElement" class="form">
+                        <div class="form-group">
+                            <label for="email">Adresse email</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="password">Mot de passe</label>
+                            <div class="password-input">
+                                <input type="password" id="password" name="password" required>
+                                <button type="button" class="password-toggle" onclick="togglePassword('password')">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="form-options">
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="rememberMe" name="rememberMe">
+                                <span class="checkmark"></span>
+                                Se souvenir de moi
+                            </label>
+                            <a href="/pages/forgot-password.html" class="link">Mot de passe oublié ?</a>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary btn-full">
+                            <span class="btn-text">Se connecter</span>
+                            <span class="btn-loading hidden">
+                                <i class="fas fa-spinner fa-spin"></i>
+                                Connexion...
+                            </span>
+                        </button>
+                    </form>
+
+                    <div class="auth-footer">
+                        <p>Pas encore de compte ? <a href="/pages/register.html" class="link">Créer un compte</a></p>
+                    </div>
+                </div>
+
+                <!-- Formulaire de vérification 2FA -->
+                <div id="verificationForm" class="auth-form hidden">
+                    <div class="auth-header">
+                        <h1>Vérification</h1>
+                        <p>Un code de vérification a été envoyé à votre adresse email</p>
+                        <div class="verification-email">
+                            <i class="fas fa-envelope"></i>
+                            <span id="verificationEmail"></span>
+                        </div>
+                    </div>
+
+                    <form id="verificationFormElement" class="form">
+                        <div class="form-group">
+                            <label for="verificationCode">Code de vérification</label>
+                            <input type="text" id="verificationCode" name="verificationCode" 
+                                   placeholder="Entrez le code à 6 chiffres" 
+                                   maxlength="6" 
+                                   pattern="[0-9]{6}" 
+                                   required>
+                            <small class="form-help">Le code expire dans <span id="countdown">15:00</span></small>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary btn-full">
+                            <span class="btn-text">Vérifier</span>
+                            <span class="btn-loading hidden">
+                                <i class="fas fa-spinner fa-spin"></i>
+                                Vérification...
+                            </span>
+                        </button>
+                    </form>
+
+                    <div class="auth-footer">
+                        <p>
+                            Code non reçu ? 
+                            <button id="resendCodeBtn" class="link-btn" disabled>
+                                Renvoyer le code <span id="resendCountdown">(60s)</span>
+                            </button>
+                        </p>
+                        <p>
+                            <button id="backToLoginBtn" class="link-btn">
+                                <i class="fas fa-arrow-left"></i>
+                                Retour à la connexion
+                            </button>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Scripts -->
+    <script src="../js/auth.js"></script>
+    <script src="../js/login-init.js"></script>
+</body>
+</html>

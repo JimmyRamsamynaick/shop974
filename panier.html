@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panier - Shop974</title>
+    
+    <!-- CSS commun -->
+    <link rel="stylesheet" href="css/common.css">
+    <!-- CSS spécifique à la page panier -->
+    <link rel="stylesheet" href="css/panier.css">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+</head>
+<body>
+    <!-- En-tête -->
+    <div id="header-placeholder"></div>
+
+    <!-- Contenu principal -->
+    <main class="main-content">
+        <!-- En-tête de la page -->
+        <section class="page-header">
+            <div class="container">
+                <h1>Mon Panier</h1>
+                <p class="page-description">Gérez vos articles et finalisez votre commande</p>
+            </div>
+        </section>
+
+        <!-- Contenu du panier -->
+        <section class="cart-content">
+            <div class="container">
+                <!-- Panier vide -->
+                <div id="empty-cart" class="empty-cart" style="display: none;">
+                    <div class="empty-cart-icon">🛒</div>
+                    <h2>Votre panier est vide</h2>
+                    <p>Découvrez nos produits et ajoutez-les à votre panier</p>
+                    <a href="produits.html" class="btn btn-primary">Voir nos produits</a>
+                </div>
+
+                <!-- Panier avec articles -->
+                <div id="cart-with-items" class="cart-with-items">
+                    <div class="cart-layout">
+                        <!-- Liste des articles -->
+                        <div class="cart-items">
+                            <div class="cart-header">
+                                <h2>Articles dans votre panier</h2>
+                                <button id="clear-cart" class="btn-clear-cart">
+                                    <span>🗑️</span>
+                                    Vider le panier
+                                </button>
+                            </div>
+
+                            <div id="cart-items-list" class="cart-items-list">
+                                <!-- Les articles seront ajoutés dynamiquement ici -->
+                            </div>
+
+                            <!-- Actions du panier -->
+                            <div class="cart-actions">
+                                <a href="produits.html" class="btn btn-secondary">
+                                    ← Continuer mes achats
+                                </a>
+                                
+                                <div class="cart-actions-right">
+                                    <button id="save-for-later" class="btn btn-outline">
+                                        💾 Sauvegarder pour plus tard
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Résumé de la commande -->
+                        <div class="cart-summary">
+                            <div class="summary-card">
+                                <h3>Résumé de la commande</h3>
+                                
+                                <div class="summary-line">
+                                    <span>Sous-total (<span id="items-count">0</span> articles)</span>
+                                    <span id="subtotal">0,00 €</span>
+                                </div>
+                                
+                                <div class="summary-line">
+                                    <span>Livraison</span>
+                                    <span id="shipping-cost">Gratuite</span>
+                                </div>
+                                
+                                <div class="summary-line discount-line" id="discount-line" style="display: none;">
+                                    <span>Réduction</span>
+                                    <span id="discount-amount">-0,00 €</span>
+                                </div>
+                                
+                                <hr class="summary-divider">
+                                
+                                <div class="summary-line total-line">
+                                    <span>Total</span>
+                                    <span id="total-amount">0,00 €</span>
+                                </div>
+
+                                <!-- Code promo -->
+                                <div class="promo-code">
+                                    <div class="promo-input-group">
+                                        <input type="text" id="promo-code" placeholder="Code promo">
+                                        <button id="apply-promo" class="btn-apply-promo">Appliquer</button>
+                                    </div>
+                                    <div id="promo-message" class="promo-message"></div>
+                                </div>
+
+                                <!-- Bouton de commande -->
+                                <button id="checkout-btn" class="btn btn-primary btn-checkout">
+                                    Passer la commande
+                                </button>
+
+                                <!-- Méthodes de paiement acceptées -->
+                                <div class="payment-methods">
+                                    <p>Paiement sécurisé</p>
+                                    <div class="payment-icons">
+                                        <span class="payment-icon">💳</span>
+                                        <span class="payment-icon">🏦</span>
+                                        <span class="payment-icon">📱</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Livraison estimée -->
+                            <div class="delivery-info">
+                                <h4>📦 Livraison estimée</h4>
+                                <p id="delivery-date">3-5 jours ouvrés</p>
+                                <p class="delivery-note">Livraison gratuite à partir de 50€</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Produits recommandés -->
+                <section class="recommended-products" id="recommended-products" style="display: none;">
+                    <h3>Vous pourriez aussi aimer</h3>
+                    <div class="recommended-grid" id="recommended-grid">
+                        <!-- Les produits recommandés seront ajoutés dynamiquement -->
+                    </div>
+                </section>
+            </div>
+        </section>
+    </main>
+
+    <!-- Pied de page -->
+    <div id="footer-placeholder"></div>
+
+    <!-- Modal de confirmation -->
+    <div id="confirm-modal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <h3 id="modal-title">Confirmer l'action</h3>
+            <p id="modal-message">Êtes-vous sûr de vouloir effectuer cette action ?</p>
+            <div class="modal-actions">
+                <button id="modal-cancel" class="btn btn-secondary">Annuler</button>
+                <button id="modal-confirm" class="btn btn-primary">Confirmer</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Messages de notification -->
+    <div id="cart-notifications" class="notifications"></div>
+
+    <!-- JavaScript commun -->
+    <script src="js/common.js"></script>
+    <!-- JavaScript spécifique à la page panier -->
+    <script src="js/panier.js"></script>
+</body>
+</html>

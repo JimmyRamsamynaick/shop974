@@ -3,545 +3,111 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="Shop 974">
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="theme-color" content="#007bff">
-    <meta name="description" content="Shop 974 - E-commerce de La Réunion. Découvrez nos produits de qualité avec livraison rapide.">
-    <meta name="keywords" content="e-commerce, réunion, 974, boutique en ligne, shopping">
-
-    <title>Shop 974 - E-commerce</title>
-
-    <!-- Styles -->
-    <link rel="stylesheet" href="css/style.css">
-
-    <!-- Favicons -->
-    <link rel="apple-touch-icon" sizes="180x180" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'><rect width='180' height='180' fill='%23007bff'/><text x='90' y='100' text-anchor='middle' fill='white' font-size='60' font-family='Arial'>S</text></svg>">
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%23007bff'/><text x='16' y='20' text-anchor='middle' fill='white' font-size='20' font-family='Arial'>S</text></svg>">
+    <title>Accueil - Shop 974</title>
+    
+    <!-- CSS commun -->
+    <link rel="stylesheet" href="/css/common.css">
+    <!-- CSS spécifique à la page d'accueil -->
+    <link rel="stylesheet" href="/css/home.css">
 </head>
 <body>
-<!-- Skip Link for Accessibility -->
-<a href="#main-content" class="skip-link">Passer au contenu principal</a>
+    <!-- Header -->
+    <div id="header-placeholder"></div>
 
-<!-- Header -->
-<header>
-    <nav class="navbar">
-        <div class="nav-container">
-            <div class="logo">
-                <h1>Shop 974</h1>
-            </div>
-
-            <button class="mobile-menu-toggle" onclick="toggleMobileMenu()" aria-label="Menu mobile" aria-expanded="false" aria-controls="navMenu">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-
-            <div class="nav-menu" id="navMenu">
-                <a href="#" class="nav-link" onclick="showHome()">Accueil</a>
-                <a href="#" class="nav-link" onclick="showProducts()">Produits</a>
-
-                <div class="user-actions">
-                    <button id="loginBtn" class="btn-secondary" onclick="showLogin()">Connexion</button>
-                    <button id="accountBtn" class="btn-secondary hidden" onclick="showAccount()">Mon Compte</button>
-                    <button class="btn-cart" onclick="showCart()" aria-label="Voir le panier">
-                        <span class="cart-icon">🛒</span>
-                        <span class="cart-text">Panier</span>
-                        <span class="cart-badge" id="cartCount">0</span>
-                    </button>
-                </div>
-            </div>
-        </div>
-    </nav>
-</header>
-
-<!-- Main Content -->
-<main id="main-content">
-    <!-- Home Section -->
-    <section id="homeSection" class="section active">
-        <div class="hero">
-            <div class="hero-content">
-                <h2>Bienvenue sur Shop 974</h2>
-                <p>Découvrez notre sélection de produits de qualité à La Réunion</p>
-                <button class="btn-primary hero-btn" onclick="showProducts()">Explorer les produits</button>
-            </div>
-        </div>
-
+    <!-- Contenu principal -->
+    <main class="main-content">
         <div class="container">
-            <section class="features">
-                <h3>Pourquoi choisir Shop 974 ?</h3>
-                <div class="features-grid">
-                    <div class="feature-card">
-                        <div class="feature-icon">🚚</div>
-                        <h4>Livraison Rapide</h4>
-                        <p>Livraison gratuite dès 50€ d'achat partout à La Réunion</p>
+            <!-- Section Hero -->
+            <section class="hero-section">
+                <div class="hero-content">
+                    <h1>🏝️ Bienvenue sur Shop 974</h1>
+                    <p class="hero-subtitle">Découvrez les trésors authentiques de La Réunion</p>
+                    <p class="hero-description">
+                        Épices, rhums, vanille, artisanat local... 
+                        Plongez dans l'univers créole et laissez-vous séduire par nos produits d'exception.
+                    </p>
+                    <div class="hero-buttons">
+                        <a href="/produits" class="btn btn-primary">Découvrir nos produits</a>
+                        <a href="#featured" class="btn btn-secondary">Voir les nouveautés</a>
                     </div>
-                    <div class="feature-card">
-                        <div class="feature-icon">💳</div>
-                        <h4>Paiement Sécurisé</h4>
-                        <p>Cartes bancaires, PayPal, Apple Pay et Google Pay acceptés</p>
+                </div>
+                <div class="hero-image">
+                    <div class="hero-placeholder">
+                        🌺 🥥 🌶️ 🍯
                     </div>
-                    <div class="feature-card">
-                        <div class="feature-icon">📞</div>
-                        <h4>Service Client</h4>
-                        <p>Une équipe dédiée pour vous accompagner 7j/7</p>
+                </div>
+            </section>
+
+            <!-- Section produits en vedette -->
+            <section id="featured" class="featured-section">
+                <h2 class="section-title">🌟 Produits en vedette</h2>
+                <div class="products-grid" id="featured-products">
+                    <!-- Les produits seront chargés dynamiquement -->
+                </div>
+                <div class="text-center mt-2">
+                    <a href="/produits" class="btn">Voir tous les produits</a>
+                </div>
+            </section>
+
+            <!-- Section catégories -->
+            <section class="categories-section">
+                <h2 class="section-title">🏷️ Nos catégories</h2>
+                <div class="categories-grid">
+                    <div class="category-card" data-category="epices">
+                        <div class="category-icon">🌶️</div>
+                        <h3>Épices & Condiments</h3>
+                        <p>Curcuma, piment, massalé...</p>
                     </div>
-                    <div class="feature-card">
-                        <div class="feature-icon">↩️</div>
-                        <h4>Retours Faciles</h4>
-                        <p>Retours gratuits sous 30 jours, satisfait ou remboursé</p>
+                    <div class="category-card" data-category="rhums">
+                        <div class="category-icon">🥃</div>
+                        <h3>Rhums & Spiritueux</h3>
+                        <p>Rhums arrangés, punchs...</p>
+                    </div>
+                    <div class="category-card" data-category="vanille">
+                        <div class="category-icon">🌿</div>
+                        <h3>Vanille & Arômes</h3>
+                        <p>Vanille Bourbon, extraits...</p>
+                    </div>
+                    <div class="category-card" data-category="artisanat">
+                        <div class="category-icon">🎨</div>
+                        <h3>Artisanat Local</h3>
+                        <p>Objets déco, bijoux...</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section à propos -->
+            <section class="about-section">
+                <div class="about-content">
+                    <div class="about-text">
+                        <h2>🏝️ L'âme de La Réunion</h2>
+                        <p>
+                            Shop 974 vous fait découvrir l'authenticité réunionnaise à travers une sélection 
+                            rigoureuse de produits locaux. Chaque article raconte une histoire, celle de notre 
+                            île intense et de ses artisans passionnés.
+                        </p>
+                        <p>
+                            De la vanille Bourbon aux épices créoles, en passant par l'artisanat traditionnel, 
+                            nous vous proposons le meilleur de La Réunion, livré directement chez vous.
+                        </p>
+                        <a href="/about" class="btn">En savoir plus</a>
+                    </div>
+                    <div class="about-image">
+                        <div class="about-placeholder">
+                            🌺 La Réunion 🌺
+                        </div>
                     </div>
                 </div>
             </section>
         </div>
-    </section>
+    </main>
 
-    <!-- Products Section -->
-    <section id="productsSection" class="section">
-        <div class="container">
-            <div class="section-header">
-                <h2>Nos Produits</h2>
-                <p>Découvrez notre sélection soigneusement choisie pour vous</p>
-            </div>
+    <!-- Footer -->
+    <div id="footer-placeholder"></div>
 
-            <!-- Filters -->
-            <div class="filters">
-                <div class="filters-scroll">
-                    <button class="filter-btn active" data-filter="all">Tous</button>
-                    <button class="filter-btn" data-filter="homme">Homme</button>
-                    <button class="filter-btn" data-filter="femme">Femme</button>
-                    <button class="filter-btn" data-filter="jeux-video">Jeux Vidéo</button>
-                    <button class="filter-btn" data-filter="peluche">Peluches</button>
-                </div>
-            </div>
-
-            <!-- Products Grid -->
-            <div id="productsGrid" class="products-grid">
-                <!-- Products will be dynamically generated -->
-            </div>
-        </div>
-    </section>
-
-    <!-- Product Detail Section -->
-    <section id="productDetailSection" class="section">
-        <div class="container">
-            <button class="btn-back" onclick="showProducts()" aria-label="Retour aux produits">
-                ← Retour aux produits
-            </button>
-            <div id="productDetail" class="product-detail">
-                <!-- Product detail will be dynamically generated -->
-            </div>
-        </div>
-    </section>
-
-    <!-- Cart Section -->
-    <section id="cartSection" class="section">
-        <div class="container">
-            <div class="section-header">
-                <h2>Mon Panier</h2>
-                <p>Vérifiez vos articles avant de finaliser votre commande</p>
-            </div>
-
-            <div class="cart-container">
-                <div id="cartItems" class="cart-items">
-                    <!-- Cart items will be dynamically generated -->
-                </div>
-
-                <div class="cart-summary">
-                    <div class="summary-details">
-                        <div class="summary-line">
-                            <span>Sous-total:</span>
-                            <span>€<span id="cartSubtotal">0.00</span></span>
-                        </div>
-                        <div class="summary-line">
-                            <span>Livraison:</span>
-                            <span id="shippingCost">Calculé à l'étape suivante</span>
-                        </div>
-                        <hr>
-                        <div class="summary-line total-line">
-                            <strong>Total: €<span id="cartTotal">0.00</span></strong>
-                        </div>
-                    </div>
-                    <button class="btn-primary btn-checkout" onclick="showCheckout()">
-                        Procéder au paiement
-                    </button>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Checkout Section -->
-    <section id="checkoutSection" class="section">
-        <div class="container">
-            <div class="section-header">
-                <h2>Finaliser la commande</h2>
-                <p>Dernière étape avant de recevoir vos produits</p>
-            </div>
-
-            <div class="checkout-container">
-                <div class="checkout-form">
-                    <div class="checkout-steps">
-                        <div class="step active">
-                            <span class="step-number">1</span>
-                            <span class="step-title">Informations</span>
-                        </div>
-                        <div class="step">
-                            <span class="step-number">2</span>
-                            <span class="step-title">Livraison</span>
-                        </div>
-                        <div class="step">
-                            <span class="step-number">3</span>
-                            <span class="step-title">Paiement</span>
-                        </div>
-                    </div>
-
-                    <form id="checkoutForm" novalidate>
-                        <fieldset>
-                            <legend>Informations personnelles</legend>
-                            <div class="form-row">
-                                <div class="form-group">
-                                    <label for="firstName">Prénom *</label>
-                                    <input type="text" id="firstName" name="firstName" required>
-                                    <div class="field-error" id="firstName-error"></div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="lastName">Nom *</label>
-                                    <input type="text" id="lastName" name="lastName" required>
-                                    <div class="field-error" id="lastName-error"></div>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="email">Email *</label>
-                                <input type="email" id="email" name="email" required>
-                                <div class="field-error" id="email-error"></div>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="phone">Téléphone *</label>
-                                <input type="tel" id="phone" name="phone" required placeholder="+262 6XX XX XX XX">
-                                <div class="field-error" id="phone-error"></div>
-                            </div>
-                        </fieldset>
-
-                        <fieldset>
-                            <legend>Adresse de livraison</legend>
-                            <div class="form-group">
-                                <label for="address">Adresse complète *</label>
-                                <input type="text" id="address" name="address" required placeholder="Votre adresse de livraison">
-                                <div class="field-error" id="address-error"></div>
-                            </div>
-
-                            <div class="form-row">
-                                <div class="form-group">
-                                    <label for="city">Ville</label>
-                                    <input type="text" id="city" name="city" placeholder="Saint-Denis">
-                                </div>
-                                <div class="form-group">
-                                    <label for="postalCode">Code postal</label>
-                                    <input type="text" id="postalCode" name="postalCode" placeholder="97400">
-                                </div>
-                            </div>
-                        </fieldset>
-
-                        <div class="payment-section">
-                            <h3>Mode de paiement</h3>
-                            <div class="payment-methods">
-                                <label class="payment-option">
-                                    <input type="radio" name="paymentMethod" value="card" checked>
-                                    <span class="payment-icon">💳</span>
-                                    <div class="payment-info">
-                                        <span class="payment-title">Carte bancaire</span>
-                                        <span class="payment-desc">Visa, Mastercard, American Express</span>
-                                    </div>
-                                </label>
-
-                                <label class="payment-option">
-                                    <input type="radio" name="paymentMethod" value="paypal">
-                                    <span class="payment-icon">💰</span>
-                                    <div class="payment-info">
-                                        <span class="payment-title">PayPal</span>
-                                        <span class="payment-desc">Payez avec votre compte PayPal</span>
-                                    </div>
-                                </label>
-                            </div>
-
-                            <button type="button" id="submitPayment" class="btn-primary btn-payment" onclick="processPayment()">
-                                Payer €<span id="finalTotal">0.00</span>
-                            </button>
-                        </div>
-                    </form>
-                </div>
-
-                <div class="order-summary">
-                    <h3>Récapitulatif de commande</h3>
-                    <div id="orderSummary" class="order-summary-content">
-                        <!-- Order summary will be dynamically generated -->
-                    </div>
-
-                    <div class="promo-code">
-                        <h4>Code promo</h4>
-                        <div class="promo-input">
-                            <input type="text" id="promoCode" placeholder="Entrez votre code">
-                            <button type="button" onclick="applyPromoCode()">Appliquer</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Login Section -->
-    <section id="loginSection" class="section">
-        <div class="container">
-            <div class="auth-container">
-                <div class="auth-header">
-                    <h2>Connexion à votre compte</h2>
-                    <p>Accédez à vos commandes et informations personnelles</p>
-                </div>
-
-                <div class="auth-tabs">
-                    <button class="auth-tab active" onclick="showLoginForm()">Connexion</button>
-                    <button class="auth-tab" onclick="showRegisterForm()">Inscription</button>
-                </div>
-
-                <div id="loginForm" class="auth-form">
-                    <form onsubmit="login(event)" novalidate>
-                        <div class="form-group">
-                            <label for="loginEmail">Email *</label>
-                            <input type="email" id="loginEmail" name="email" required>
-                            <div class="field-error" id="loginEmail-error"></div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="loginPassword">Mot de passe *</label>
-                            <input type="password" id="loginPassword" name="password" required>
-                            <div class="field-error" id="loginPassword-error"></div>
-                        </div>
-
-                        <div class="form-options">
-                            <label class="checkbox-label">
-                                <input type="checkbox" name="remember" id="rememberMe">
-                                <span class="checkbox-custom"></span>
-                                Se souvenir de moi
-                            </label>
-                            <a href="#" class="forgot-password">Mot de passe oublié ?</a>
-                        </div>
-
-                        <button type="submit" class="btn-primary btn-auth">Se connecter</button>
-                    </form>
-                </div>
-
-                <div id="registerForm" class="auth-form hidden">
-                    <form onsubmit="register(event)" novalidate>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="regFirstName">Prénom *</label>
-                                <input type="text" id="regFirstName" name="firstName" required>
-                                <div class="field-error" id="regFirstName-error"></div>
-                            </div>
-                            <div class="form-group">
-                                <label for="regLastName">Nom *</label>
-                                <input type="text" id="regLastName" name="lastName" required>
-                                <div class="field-error" id="regLastName-error"></div>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="regEmail">Email *</label>
-                            <input type="email" id="regEmail" name="email" required>
-                            <div class="field-error" id="regEmail-error"></div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="regPassword">Mot de passe *</label>
-                            <input type="password" id="regPassword" name="password" required minlength="6">
-                            <div class="field-error" id="regPassword-error"></div>
-                            <div class="password-strength">
-                                <div class="strength-bar">
-                                    <div class="strength-fill"></div>
-                                </div>
-                                <span class="strength-text">Minimum 6 caractères</span>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="checkbox-label">
-                                <input type="checkbox" name="terms" id="acceptTerms" required>
-                                <span class="checkbox-custom"></span>
-                                J'accepte les conditions d'utilisation
-                            </label>
-                        </div>
-
-                        <button type="submit" class="btn-primary btn-auth">S'inscrire</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Account Section -->
-    <section id="accountSection" class="section">
-        <div class="container">
-            <div class="account-header">
-                <div class="account-info">
-                    <h2>Mon Compte</h2>
-                    <p id="welcomeMessage">Bienvenue dans votre espace personnel</p>
-                </div>
-                <button class="btn-secondary" onclick="logout()">Déconnexion</button>
-            </div>
-
-            <div class="account-tabs">
-                <button class="account-tab active" onclick="showOrderHistory()">
-                    <span class="tab-icon">📦</span>
-                    Mes commandes
-                </button>
-                <button class="account-tab" onclick="showProfile()">
-                    <span class="tab-icon">👤</span>
-                    Mon profil
-                </button>
-                <button class="account-tab" onclick="showPreferences()">
-                    <span class="tab-icon">⚙️</span>
-                    Préférences
-                </button>
-            </div>
-
-            <div id="orderHistory" class="account-content">
-                <div class="content-header">
-                    <h3>Historique des commandes</h3>
-                </div>
-                <div id="ordersList" class="orders-list">
-                    <!-- Orders will be dynamically generated -->
-                </div>
-            </div>
-
-            <div id="profileSection" class="account-content hidden">
-                <div class="content-header">
-                    <h3>Informations personnelles</h3>
-                </div>
-
-                <form id="profileForm" onsubmit="updateProfile(event)" novalidate>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="profileFirstName">Prénom *</label>
-                            <input type="text" id="profileFirstName" name="firstName" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="profileLastName">Nom *</label>
-                            <input type="text" id="profileLastName" name="lastName" required>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="profileEmail">Email *</label>
-                        <input type="email" id="profileEmail" name="email" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="profilePhone">Téléphone</label>
-                        <input type="tel" id="profilePhone" name="phone">
-                    </div>
-
-                    <div class="form-actions">
-                        <button type="submit" class="btn-primary">Mettre à jour</button>
-                    </div>
-                </form>
-            </div>
-
-            <div id="preferencesSection" class="account-content hidden">
-                <div class="content-header">
-                    <h3>Préférences</h3>
-                </div>
-
-                <div class="preferences-grid">
-                    <div class="preference-group">
-                        <h4>Notifications</h4>
-                        <label class="toggle-label">
-                            <input type="checkbox" id="emailNotifications" checked>
-                            <span class="toggle-switch"></span>
-                            Notifications par email
-                        </label>
-                        <label class="toggle-label">
-                            <input type="checkbox" id="promoNotifications" checked>
-                            <span class="toggle-switch"></span>
-                            Offres promotionnelles
-                        </label>
-                    </div>
-
-                    <div class="preference-group">
-                        <h4>Apparence</h4>
-                        <label class="toggle-label">
-                            <input type="checkbox" id="darkMode" onchange="toggleDarkMode()">
-                            <span class="toggle-switch"></span>
-                            Mode sombre
-                        </label>
-                    </div>
-                </div>
-
-                <div class="preferences-actions">
-                    <button class="btn-primary" onclick="saveUserPreferences()">Sauvegarder</button>
-                </div>
-            </div>
-        </div>
-    </section>
-</main>
-
-<!-- Footer -->
-<footer>
-    <div class="container">
-        <div class="footer-content">
-            <div class="footer-section">
-                <h4>Shop 974</h4>
-                <p>Votre boutique en ligne de confiance à La Réunion depuis 2024.</p>
-            </div>
-
-            <div class="footer-section">
-                <h4>Service Client</h4>
-                <ul>
-                    <li><a href="#contact">Nous contacter</a></li>
-                    <li><a href="#faq">FAQ</a></li>
-                    <li><a href="#returns">Retours & Échanges</a></li>
-                    <li><a href="#shipping">Livraison</a></li>
-                </ul>
-            </div>
-
-            <div class="footer-section">
-                <h4>Légal</h4>
-                <ul>
-                    <li><a href="#terms">Conditions d'utilisation</a></li>
-                    <li><a href="#privacy">Politique de confidentialité</a></li>
-                    <li><a href="#legal">Mentions légales</a></li>
-                </ul>
-            </div>
-
-            <div class="footer-section">
-                <h4>Newsletter</h4>
-                <p>Restez informé de nos dernières offres</p>
-                <form class="newsletter-form" onsubmit="subscribeNewsletter(event)">
-                    <input type="email" placeholder="Votre email" required>
-                    <button type="submit" class="btn-primary">S'abonner</button>
-                </form>
-            </div>
-        </div>
-
-        <div class="footer-bottom">
-            <div class="footer-bottom-content">
-                <p>&copy; 2024 Shop 974. Tous droits réservés.</p>
-            </div>
-        </div>
-    </div>
-</footer>
-
-<!-- Loading Overlay -->
-<div id="loadingOverlay" class="loading-overlay hidden">
-    <div class="loading-content">
-        <div class="loading-spinner"></div>
-        <p class="loading-text">Chargement en cours...</p>
-    </div>
-</div>
-
-<!-- JavaScript -->
-<script src="js/script.js"></script>
+    <!-- JavaScript commun -->
+    <script src="/js/common.js"></script>
+    <!-- JavaScript spécifique à la page d'accueil -->
+    <script src="/js/home.js"></script>
 </body>
 </html>
