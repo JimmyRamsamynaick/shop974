@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Authentification - Shop974</title>
+    <link rel="stylesheet" href="./css/common.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .info-section {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        .info-section h3 {
+            margin-top: 0;
+            color: #333;
+        }
+        .token-display {
+            word-break: break-all;
+            background-color: #e9e9e9;
+            padding: 10px;
+            border-radius: 3px;
+            font-family: monospace;
+            font-size: 12px;
+        }
+        .button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        .button:hover {
+            background-color: #0056b3;
+        }
+        .error {
+            color: red;
+            background-color: #ffe6e6;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+        .success {
+            color: green;
+            background-color: #e6ffe6;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔍 Test d'Authentification - Shop974</h1>
+        
+        <div class="info-section">
+            <h3>📋 Informations de Session</h3>
+            <p><strong>Token d'authentification:</strong></p>
+            <div id="token-display" class="token-display">Aucun token trouvé</div>
+            
+            <p><strong>Données utilisateur:</strong></p>
+            <div id="user-display" class="token-display">Aucune donnée utilisateur trouvée</div>
+        </div>
+
+        <div class="info-section">
+            <h3>🧪 Tests API</h3>
+            <button class="button" onclick="testMeEndpoint()">Tester /api/auth/me</button>
+            <button class="button" onclick="testProfileEndpoint()">Tester /api/auth/profile</button>
+            <button class="button" onclick="clearStorage()">Vider le stockage local</button>
+            <button class="button" onclick="goToLogin()">Aller à la connexion</button>
+            <button class="button" onclick="goToProfile()">Aller au profil</button>
+            
+            <div id="test-results"></div>
+        </div>
+
+        <div class="info-section">
+            <h3>📊 Logs en temps réel</h3>
+            <div id="logs" style="height: 200px; overflow-y: auto; background-color: #000; color: #0f0; padding: 10px; font-family: monospace; font-size: 12px;"></div>
+        </div>
+    </div>
+
+    <script>
+        // Fonction pour ajouter des logs
+        function addLog(message) {
+            const logsDiv = document.getElementById('logs');
+            const timestamp = new Date().toLocaleTimeString();
+            logsDiv.innerHTML += `[${timestamp}] ${message}\n`;
+            logsDiv.scrollTop = logsDiv.scrollHeight;
+        }
+
+        // Charger les informations au démarrage
+        function loadInfo() {
+            const token = localStorage.getItem('authToken');
+            const user = localStorage.getItem('user');
+            
+            document.getElementById('token-display').textContent = token || 'Aucun token trouvé';
+            document.getElementById('user-display').textContent = user || 'Aucune donnée utilisateur trouvée';
+            
+            addLog('Page chargée');
+            addLog(`Token présent: ${token ? 'Oui' : 'Non'}`);
+            addLog(`Données utilisateur présentes: ${user ? 'Oui' : 'Non'}`);
+        }
+
+        // Tester l'endpoint /me
+        async function testMeEndpoint() {
+            const token = localStorage.getItem('authToken');
+            const resultsDiv = document.getElementById('test-results');
+            
+            if (!token) {
+                resultsDiv.innerHTML = '<div class="error">Aucun token trouvé pour le test</div>';
+                addLog('Test /me échoué: pas de token');
+                return;
+            }
+
+            try {
+                addLog('Test de /api/auth/me...');
+                const response = await fetch('/api/auth/me', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+
+                addLog(`Réponse: ${response.status} ${response.statusText}`);
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    resultsDiv.innerHTML = `<div class="success">✅ Test /me réussi: ${JSON.stringify(data, null, 2)}</div>`;
+                    addLog('Test /me réussi');
+                } else {
+                    const error = await response.text();
+                    resultsDiv.innerHTML = `<div class="error">❌ Test /me échoué (${response.status}): ${error}</div>`;
+                    addLog(`Test /me échoué: ${response.status} - ${error}`);
+                }
+            } catch (error) {
+                resultsDiv.innerHTML = `<div class="error">❌ Erreur réseau: ${error.message}</div>`;
+                addLog(`Erreur réseau: ${error.message}`);
+            }
+        }
+
+        // Tester l'endpoint /profile
+        async function testProfileEndpoint() {
+            const token = localStorage.getItem('authToken');
+            const resultsDiv = document.getElementById('test-results');
+            
+            if (!token) {
+                resultsDiv.innerHTML = '<div class="error">Aucun token trouvé pour le test</div>';
+                addLog('Test /profile échoué: pas de token');
+                return;
+            }
+
+            try {
+                addLog('Test de /api/auth/profile...');
+                const response = await fetch('/api/auth/profile', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+
+                addLog(`Réponse: ${response.status} ${response.statusText}`);
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    resultsDiv.innerHTML = `<div class="success">✅ Test /profile réussi: ${JSON.stringify(data, null, 2)}</div>`;
+                    addLog('Test /profile réussi');
+                } else {
+                    const error = await response.text();
+                    resultsDiv.innerHTML = `<div class="error">❌ Test /profile échoué (${response.status}): ${error}</div>`;
+                    addLog(`Test /profile échoué: ${response.status} - ${error}`);
+                }
+            } catch (error) {
+                resultsDiv.innerHTML = `<div class="error">❌ Erreur réseau: ${error.message}</div>`;
+                addLog(`Erreur réseau: ${error.message}`);
+            }
+        }
+
+        // Vider le stockage local
+        function clearStorage() {
+            localStorage.removeItem('authToken');
+            localStorage.removeItem('user');
+            localStorage.removeItem('currentUser');
+            loadInfo();
+            document.getElementById('test-results').innerHTML = '<div class="success">✅ Stockage local vidé</div>';
+            addLog('Stockage local vidé');
+        }
+
+        // Navigation
+        function goToLogin() {
+            addLog('Redirection vers connexion.html');
+            window.location.href = '/connexion.html';
+        }
+
+        function goToProfile() {
+            addLog('Redirection vers profile.html');
+            window.location.href = '/profile.html';
+        }
+
+        // Charger les informations au démarrage
+        document.addEventListener('DOMContentLoaded', loadInfo);
+    </script>
+</body>
+</html>

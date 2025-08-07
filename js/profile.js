@@ -7,17 +7,24 @@ class ProfilePage {
     }
 
     async init() {
+        console.log('Initialisation de la page de profil');
+        
         // Vérifier l'authentification
         this.token = localStorage.getItem('authToken');
+        console.log('Token trouvé:', this.token ? 'Oui' : 'Non');
+        
         if (!this.token) {
+            console.log('Pas de token, redirection vers connexion.html');
             window.location.href = '/connexion.html';
             return;
         }
 
         // Charger les données utilisateur
+        console.log('Chargement des données utilisateur...');
         await this.loadUserFromServer();
         
         // Initialiser l'interface
+        console.log('Initialisation de l\'interface');
         this.bindEvents();
         this.loadUserData();
         this.loadTab('personal');
@@ -25,30 +32,39 @@ class ProfilePage {
 
     async loadUserFromServer() {
         try {
+            console.log('Appel API /api/auth/me avec token:', this.token);
+            
             const response = await fetch('/api/auth/me', {
                 headers: {
                     'Authorization': `Bearer ${this.token}`
                 }
             });
 
+            console.log('Réponse API:', response.status, response.statusText);
+
             if (response.ok) {
                 this.user = await response.json();
+                console.log('Données utilisateur reçues:', this.user);
                 localStorage.setItem('user', JSON.stringify(this.user));
             } else if (response.status === 401) {
+                console.log('Token invalide (401), redirection vers connexion');
                 // Token invalide
                 localStorage.removeItem('authToken');
                 localStorage.removeItem('user');
                 window.location.href = '/connexion.html';
             } else {
+                console.log('Erreur API:', response.status);
                 throw new Error('Erreur lors du chargement des données utilisateur');
             }
         } catch (error) {
-            console.error('Erreur:', error);
+            console.error('Erreur lors du chargement:', error);
             // Fallback sur les données locales
             const userData = localStorage.getItem('user');
             if (userData) {
+                console.log('Utilisation des données locales');
                 this.user = JSON.parse(userData);
             } else {
+                console.log('Pas de données locales, redirection vers connexion');
                 window.location.href = '/connexion.html';
             }
         }

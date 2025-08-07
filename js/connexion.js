@@ -484,20 +484,25 @@ class AuthPage {
             const result = await response.json();
             
             if (result.success) {
+                console.log('Vérification réussie:', result);
+                
                 if (type === 'register') {
                     // Inscription réussie - Connexion automatique
                     this.showMessage('Inscription réussie ! Connexion automatique...', 'success');
                     
                     // Stocker le token et les données utilisateur
-                    if (result.data.token) {
+                    if (result.data && result.data.token) {
+                        console.log('Stockage du token d\'inscription:', result.data.token);
                         localStorage.setItem('authToken', result.data.token);
                         this.setCurrentUser(result.data.user);
                         
                         // Rediriger vers la page de profil/compte
                         setTimeout(() => {
+                            console.log('Redirection vers profile.html après inscription');
                             window.location.href = '/profile.html';
                         }, 1500);
                     } else {
+                        console.log('Pas de token reçu pour l\'inscription');
                         // Fallback si pas de token
                         setTimeout(() => {
                             this.hideVerificationForm();
@@ -506,11 +511,23 @@ class AuthPage {
                     }
                 } else {
                     // Connexion réussie
-                    if (result.data.token) {
+                    console.log('Connexion réussie, données reçues:', result.data);
+                    
+                    if (result.data && result.data.token) {
+                        console.log('Stockage du token de connexion:', result.data.token);
                         localStorage.setItem('authToken', result.data.token);
+                        this.setCurrentUser(result.data.user);
+                        
+                        this.showMessage('Connexion réussie ! Redirection...', 'success');
+                        
+                        setTimeout(() => {
+                            console.log('Redirection vers profile.html après connexion');
+                            window.location.href = '/profile.html';
+                        }, 1000);
+                    } else {
+                        console.log('Pas de token reçu pour la connexion');
+                        this.showMessage('Erreur: Token manquant', 'error');
                     }
-                    this.setCurrentUser(result.data.user);
-                    window.location.href = result.data.redirectUrl || '/profile.html';
                 }
             } else {
                 this.showMessage(result.message || 'Code de vérification invalide.', 'error');
