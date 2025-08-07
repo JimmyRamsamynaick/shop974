@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test File Protocol - Shop 974</title>
+    
+    <!-- CSS commun -->
+    <link rel="stylesheet" href="./css/common.css">
+    <!-- CSS spécifique à la page d'accueil -->
+    <link rel="stylesheet" href="./css/home.css">
+    
+    <style>
+        .test-info {
+            background: #e3f2fd;
+            border: 2px solid #2196f3;
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+            text-align: center;
+        }
+        .protocol-info {
+            font-weight: bold;
+            color: #1976d2;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div id="header-placeholder"></div>
+
+    <!-- Contenu principal -->
+    <main class="main-content">
+        <div class="container">
+            <div class="test-info">
+                <h2>🧪 Test du protocole File://</h2>
+                <p>Ce fichier teste le fonctionnement en mode <span class="protocol-info" id="protocol-display">file://</span></p>
+                <p>URL actuelle : <span id="current-url"></span></p>
+                <p>Status des composants : <span id="components-status">Chargement...</span></p>
+            </div>
+
+            <!-- Section Hero -->
+            <section class="hero-section">
+                <div class="hero-content">
+                    <h1>🏝️ Test Shop 974</h1>
+                    <p class="hero-subtitle">Vérification du fonctionnement cross-protocol</p>
+                    <p class="hero-description">
+                        Ce test vérifie que le site fonctionne correctement en mode file:// 
+                        (ouverture directe) et en mode http:// (serveur).
+                    </p>
+                    <div class="hero-buttons">
+                        <a href="produits.html" class="btn btn-primary">Tester navigation</a>
+                        <button onclick="testCart()" class="btn btn-secondary">Tester panier</button>
+                    </div>
+                </div>
+                <div class="hero-image">
+                    <div class="hero-placeholder">
+                        🧪 TEST 🧪
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <div id="footer-placeholder"></div>
+
+    <!-- JavaScript commun -->
+    <script src="./js/common.js"></script>
+    
+    <script>
+        // Script de test
+        function updateTestInfo() {
+            document.getElementById('protocol-display').textContent = window.location.protocol;
+            document.getElementById('current-url').textContent = window.location.href;
+        }
+
+        function testCart() {
+            if (window.commonApp) {
+                window.commonApp.addToCart('test-product', 1);
+                window.commonApp.showNotification('Produit ajouté au panier !', 'success');
+            } else {
+                alert('CommonApp non initialisé');
+            }
+        }
+
+        // Vérifier le chargement des composants
+        function checkComponents() {
+            const header = document.getElementById('header-placeholder');
+            const footer = document.getElementById('footer-placeholder');
+            const status = document.getElementById('components-status');
+            
+            if (header && header.innerHTML.trim() && footer && footer.innerHTML.trim()) {
+                status.textContent = '✅ Composants chargés';
+                status.style.color = 'green';
+            } else {
+                status.textContent = '❌ Composants non chargés';
+                status.style.color = 'red';
+            }
+        }
+
+        // Initialiser les tests
+        document.addEventListener('DOMContentLoaded', function() {
+            updateTestInfo();
+            
+            // Vérifier les composants après un délai
+            setTimeout(checkComponents, 2000);
+        });
+    </script>
+</body>
+</html>
